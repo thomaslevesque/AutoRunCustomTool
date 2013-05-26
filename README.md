@@ -20,3 +20,7 @@ How to use
 ----------
 
 Basically, all you have to do is set the *Custom Tool* for the trigger file to "AutoRunCustomTool", and set the *Custom tool namespace* to the name of the target file. That's it!
+
+Here's a screenshot that shows how it works:
+
+![AutoRunCustomTool demo](img/screenshot-annotated.png)
