@@ -4,6 +4,8 @@
     <Identity Id="7ec0f89c-f00d-48ab-a76b-713d90fdbf03" Version="1.0" Language="en-US" Publisher="Thomas Levesque" />
     <DisplayName>AutoRunCustomTool</DisplayName>
     <Description>Automatically runs the custom tool on another file when a file is modified.</Description>
+    <MoreInfo>https://github.com/thomaslevesque/AutoRunCustomTool</MoreInfo>
+    <Icon>Resources\Package.ico</Icon>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="11.0" />
