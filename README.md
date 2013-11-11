@@ -19,8 +19,10 @@ Note that this was just an example; the trigger file doesn't have to be a resx f
 How to use
 ----------
 
-Basically, all you have to do is set the *Custom Tool* for the trigger file to "AutoRunCustomTool", and set the *Custom tool namespace* to the name of the target file. That's it!
+After you install the extension, you should see a new **Run custom tool on** property on each project item. Just edit this property to add the name(s) of the target file(s). That's it!
 
 Here's a screenshot that shows how it works:
 
-![AutoRunCustomTool demo](img/screenshot-annotated.png)
+![AutoRunCustomTool demo](img/screenshot-annotated-2.0.png)
+
+**Note to users of previous versions**: in previous versions, you had to set the *Custom Tool* property for the trigger file to "AutoRunCustomTool", and set the *Custom tool namespace* to the name of the target file. This sometimes caused a warning in Visual Studio :  "Cannot find custom tool 'AutoRunCustomTool' on this system.". I changed the way the extension works so that it doesn't use the *Custom Tool* property anymore. To ensure compatibility with existing projects, the *Custom Tool* approach is still supported, but not recommended.
