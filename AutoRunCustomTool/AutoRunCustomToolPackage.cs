@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using EnvDTE;
 using Microsoft.VisualStudio;
@@ -28,6 +29,8 @@ namespace ThomasLevesque.AutoRunCustomTool
         private DTE _dte;
         private Events _events;
         private DocumentEvents _documentEvents;
+        private OutputWindowPane _outputPane;
+        private ErrorListProvider _errorListProvider;
         private readonly Dictionary<int, IExtenderProvider> _registerExtenderProviders = new Dictionary<int, IExtenderProvider>();
 
         public const string TargetsPropertyName = "RunCustomToolOn";
@@ -42,6 +45,19 @@ namespace ThomasLevesque.AutoRunCustomTool
             _documentEvents = _events.DocumentEvents;
             _documentEvents.DocumentSaved += DocumentEvents_DocumentSaved;
 
+            var window = _dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
+            
+            var outputWindow = (OutputWindow)window.Object;
+
+            _outputPane = outputWindow.OutputWindowPanes
+                                      .Cast<OutputWindowPane>()
+                                      .FirstOrDefault(p => p.Name == "AutoRunCustomTool")
+                          ?? outputWindow.OutputWindowPanes.Add("AutoRunCustomTool");
+            _errorListProvider = new ErrorListProvider(this)
+                                 {
+                                      ProviderName = "AutoRunCustomTool",
+                                      ProviderGuid = Guid.NewGuid()
+                                 };
             RegisterExtenderProvider();
 
         }
@@ -68,29 +84,39 @@ namespace ThomasLevesque.AutoRunCustomTool
 
             string docFullPath = (string) GetPropertyValue(docItem, "FullPath");
 
+            var projectName = docItem.ContainingProject.UniqueName;
+            IVsSolution solution = (IVsSolution)GetGlobalService(typeof(SVsSolution));
+            IVsHierarchy project;
+            solution.GetProjectOfUniqueName(projectName, out project);
+
+            var docErrors = _errorListProvider.Tasks.Cast<ErrorTask>().Where(t => t.Document == docFullPath).ToList();
+            foreach (var errorTask in docErrors)
+            {
+                _errorListProvider.Tasks.Remove(errorTask);
+            }
+
             var targets = new List<string>();
 
             string customTool = GetPropertyValue(docItem, "CustomTool") as string;
             if (customTool == "AutoRunCustomTool")
             {
+                LogWarning(project, docFullPath, "Setting Custom Tool to 'AutoRunCustomTool' is still supported for compatibility, but is deprecated. Use the 'Run custom tool on' property instead");
                 string targetName = GetPropertyValue(docItem, "CustomToolNamespace") as string;
-                if (targetName == null)
+                if (string.IsNullOrEmpty(targetName))
+                {
+                    LogError(project, docFullPath, "The target file is not specified. Enter its relative path in the 'Custom tool namespace' property");
                     return;
+                }
                 targets.Add(targetName);
             }
             else
             {
-                var projectName = docItem.ContainingProject.UniqueName;
-                IVsSolution solution = (IVsSolution) GetGlobalService(typeof(SVsSolution));
-                IVsHierarchy hierarchy;
-                solution.GetProjectOfUniqueName(projectName, out hierarchy);
-
-                IVsBuildPropertyStorage storage = hierarchy as IVsBuildPropertyStorage;
+                IVsBuildPropertyStorage storage = project as IVsBuildPropertyStorage;
                 if (storage == null)
                     return;
 
                 uint itemId;
-                if (hierarchy.ParseCanonicalName(docFullPath, out itemId) != 0)
+                if (project.ParseCanonicalName(docFullPath, out itemId) != 0)
                     return;
 
                 string runCustomToolOn;
@@ -109,11 +135,66 @@ namespace ThomasLevesque.AutoRunCustomTool
                 string targetPath = Path.GetFullPath(Path.Combine(dir, targetName));
                 var targetItem = _dte.Solution.FindProjectItem(targetPath);
                 if (targetItem == null)
+                {
+                    LogError(project, docFullPath, "Target item '{0}' was not found", targetPath);
                     continue;
+                }
+
+                string targetCustomTool = (string)GetPropertyValue(targetItem, "CustomTool");
+                if (string.IsNullOrEmpty(targetCustomTool))
+                {
+                    LogError(project, docFullPath, "Target item '{0}' doesn't define a custom tool", targetPath);
+                    continue;
+                }
 
                 var vsTargetItem = (VSProjectItem)targetItem.Object;
+                LogActivity("Running custom tool on '{0}'", targetPath);
                 vsTargetItem.RunCustomTool();
             }
+        }
+
+        private void LogActivity(string format, params object[] args)
+        {
+            _outputPane.Activate();
+            _outputPane.OutputString(string.Format(format, args) + Environment.NewLine);
+        }
+
+        private void LogError(IVsHierarchy project, string document, string format, params object[] args)
+        {
+            string text = string.Format(format, args);
+            LogErrorTask(project, document, TaskErrorCategory.Error, text);
+        }
+
+        private void LogWarning(IVsHierarchy project, string document, string format, params object[] args)
+        {
+            string text = string.Format(format, args);
+            LogErrorTask(project, document, TaskErrorCategory.Warning, text);
+        }
+
+        private void LogErrorTask(IVsHierarchy project, string document, TaskErrorCategory errorCategory, string text)
+        {
+            var task = new ErrorTask
+            {
+                Category = TaskCategory.BuildCompile,
+                ErrorCategory = errorCategory,
+                Text = "AutoRunCustomTool: " + text,
+                Document = document,
+                HierarchyItem = project,
+                Line = -1,
+                Column = -1
+            };
+            _errorListProvider.Tasks.Add(task);
+            string prefix = "";
+            switch (errorCategory)
+            {
+                case TaskErrorCategory.Error:
+                    prefix = "Error: ";
+                    break;
+                case TaskErrorCategory.Warning:
+                    prefix = "Warning: ";
+                    break;
+            }
+            _outputPane.OutputString(prefix + text + Environment.NewLine);            
         }
 
         private static object GetPropertyValue(ProjectItem item, object index)
@@ -129,6 +210,5 @@ namespace ThomasLevesque.AutoRunCustomTool
         }
 
         #endregion
-
     }
 }
