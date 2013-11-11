@@ -106,7 +106,7 @@ namespace ThomasLevesque.AutoRunCustomTool
             {
                 string dir = Path.GetDirectoryName(docFullPath);
                 // ReSharper disable once AssignNullToNotNullAttribute
-                string targetPath = Path.Combine(dir, targetName);
+                string targetPath = Path.GetFullPath(Path.Combine(dir, targetName));
                 var targetItem = _dte.Solution.FindProjectItem(targetPath);
                 if (targetItem == null)
                     continue;
