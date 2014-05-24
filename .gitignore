@@ -137,6 +137,9 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
+#Roslyn .sln.ide folder
+*.sln.ide/
+
 # =========================
 # Windows detritus
 # =========================
