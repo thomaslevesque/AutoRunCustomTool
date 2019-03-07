@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="7ec0f89c-f00d-48ab-a76b-713d90fdbf03" Version="2.1.1" Language="en-US" Publisher="Thomas Levesque" />
+    <Identity Id="7ec0f89c-f00d-48ab-a76b-713d90fdbf03" Version="2.2.0" Language="en-US" Publisher="Thomas Levesque" />
     <DisplayName>AutoRunCustomTool</DisplayName>
     <Description xml:space="preserve">Automatically runs the custom tool on another file when a file is modified.</Description>
     <MoreInfo>https://github.com/thomaslevesque/AutoRunCustomTool</MoreInfo>
@@ -12,12 +12,11 @@
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,]" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="11.0" />
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
   </Assets>
   <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.26004.1,16.0)" DisplayName="Visual Studio core editor" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
   </Prerequisites>
 </PackageManifest>

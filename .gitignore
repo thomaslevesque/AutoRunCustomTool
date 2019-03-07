@@ -161,3 +161,6 @@ $RECYCLE.BIN/
 
 packages/
 
+# Visual Studio folder
+.vs/
+
