@@ -10,14 +10,16 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 using VSLangProj;
 using IExtenderProvider = EnvDTE.IExtenderProvider;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ThomasLevesque.AutoRunCustomTool
 {
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidAutoRunCustomToolPkgString)]
-    [ProvideAutoLoad(UIContextGuids.SolutionExists)]
-    public sealed class AutoRunCustomToolPackage : Package
+    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    public sealed class AutoRunCustomToolPackage : AsyncPackage
     {
         public AutoRunCustomToolPackage()
         {
@@ -34,33 +36,6 @@ namespace ThomasLevesque.AutoRunCustomTool
         private readonly Dictionary<int, IExtenderProvider> _registerExtenderProviders = new Dictionary<int, IExtenderProvider>();
 
         public const string TargetsPropertyName = "RunCustomToolOn";
-
-        protected override void Initialize()
-        {
-            Debug.WriteLine ("Entering Initialize() of: {0}", this);
-            base.Initialize();
-
-            _dte = (DTE)GetService(typeof(DTE));
-            _events = _dte.Events;
-            _documentEvents = _events.DocumentEvents;
-            _documentEvents.DocumentSaved += DocumentEvents_DocumentSaved;
-
-            var window = _dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
-            
-            var outputWindow = (OutputWindow)window.Object;
-
-            _outputPane = outputWindow.OutputWindowPanes
-                                      .Cast<OutputWindowPane>()
-                                      .FirstOrDefault(p => p.Name == "AutoRunCustomTool")
-                          ?? outputWindow.OutputWindowPanes.Add("AutoRunCustomTool");
-            _errorListProvider = new ErrorListProvider(this)
-                                 {
-                                      ProviderName = "AutoRunCustomTool",
-                                      ProviderGuid = Guid.NewGuid()
-                                 };
-            RegisterExtenderProvider();
-
-        }
 
         void RegisterExtenderProvider()
         {
@@ -82,7 +57,7 @@ namespace ThomasLevesque.AutoRunCustomTool
             if (docItem == null)
                 return;
 
-            string docFullPath = (string) GetPropertyValue(docItem, "FullPath");
+            string docFullPath = (string)GetPropertyValue(docItem, "FullPath");
 
             var projectName = docItem.ContainingProject.UniqueName;
             IVsSolution solution = (IVsSolution)GetGlobalService(typeof(SVsSolution));
@@ -151,6 +126,31 @@ namespace ThomasLevesque.AutoRunCustomTool
                 LogActivity("Running custom tool on '{0}'", targetPath);
                 vsTargetItem.RunCustomTool();
             }
+        }
+
+        protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        {
+            Debug.WriteLine("Entering Initialize() of: {0}", this);
+            await base.InitializeAsync(cancellationToken, progress);
+            _dte = (DTE)(await GetServiceAsync(typeof(DTE)));
+            _events = _dte.Events;
+            _documentEvents = _events.DocumentEvents;
+            _documentEvents.DocumentSaved += DocumentEvents_DocumentSaved;
+
+            var window = _dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
+
+            var outputWindow = (OutputWindow)window.Object;
+
+            _outputPane = outputWindow.OutputWindowPanes
+                                      .Cast<OutputWindowPane>()
+                                      .FirstOrDefault(p => p.Name == "AutoRunCustomTool")
+                          ?? outputWindow.OutputWindowPanes.Add("AutoRunCustomTool");
+            _errorListProvider = new ErrorListProvider(this)
+            {
+                ProviderName = "AutoRunCustomTool",
+                ProviderGuid = Guid.NewGuid()
+            };
+            RegisterExtenderProvider();
         }
 
         private void LogActivity(string format, params object[] args)

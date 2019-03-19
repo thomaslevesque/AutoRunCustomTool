@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="7ec0f89c-f00d-48ab-a76b-713d90fdbf03" Version="2.2.0" Language="en-US" Publisher="Thomas Levesque" />
+    <Identity Id="7ec0f89c-f00d-48ab-a76b-713d90fdbf03" Version="3.0.0" Language="en-US" Publisher="Thomas Levesque" />
     <DisplayName>AutoRunCustomTool</DisplayName>
     <Description xml:space="preserve">Automatically runs the custom tool on another file when a file is modified.</Description>
     <MoreInfo>https://github.com/thomaslevesque/AutoRunCustomTool</MoreInfo>
     <Icon>Resources\Package.ico</Icon>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,]" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0,)" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,]" />

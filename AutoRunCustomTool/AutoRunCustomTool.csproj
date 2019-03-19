@@ -91,17 +91,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VSLangProj">
-      <Version>7.0.3301</Version>
+    <PackageReference Include="EnvDTE100">
+      <Version>10.0.3</Version>
     </PackageReference>
-    <PackageReference Include="VSSDK.DTE.10">
-      <Version>10.0.4</Version>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.14.0">
+      <Version>14.3.25407</Version>
     </PackageReference>
-    <PackageReference Include="VSSDK.IDE.11">
-      <Version>11.0.4</Version>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime">
+      <Version>14.3.26929</Version>
     </PackageReference>
-    <PackageReference Include="VSSDK.Shell.11">
-      <Version>11.0.4</Version>
+    <PackageReference Include="VSLangProj140">
+      <Version>14.0.25030</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>
