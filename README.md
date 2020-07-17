@@ -3,6 +3,8 @@ AutoRunCustomTool
 
 *[Download from Visual Studio Gallery](http://visualstudiogallery.msdn.microsoft.com/ecb123bf-44bb-4ae3-91ee-a08fc1b9770e)*
 
+⚠ **Known issue**: This extension doesn't work in SDK-style (.NET Core) projects. See [#18](https://github.com/thomaslevesque/AutoRunCustomTool/issues/18) for details. ⚠
+
 A Visual Studio extension that automatically runs the custom tool on another file when a file is modified
 
 OK, I realize that this description is perhaps not very clear, so let's take an example. Let's assume (well, it's not really an assumption; it's actually the scenario that caused me to create this tool) that in your project, you can't (or don't want to) use the default custom tool for resx resource files. Instead, you use a T4 template to generate the code associated with the resx file. So you have 3 files :
