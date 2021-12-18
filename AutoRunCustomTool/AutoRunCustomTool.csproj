@@ -64,6 +64,9 @@
     <Compile Include="Guids.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="AutoRunCustomToolPackage.cs" />
+    <Compile Include="Options\OptionsPageGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyExtender.cs" />
     <Compile Include="PropertyExtenderProvider.cs" />

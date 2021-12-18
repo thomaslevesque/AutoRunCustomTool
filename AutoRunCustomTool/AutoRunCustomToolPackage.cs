@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell;
 using VSLangProj;
 using IExtenderProvider = EnvDTE.IExtenderProvider;
 using System.Threading;
-using System.Threading.Tasks;
+using ThomasLevesque.AutoRunCustomTool.Options;
 
 namespace ThomasLevesque.AutoRunCustomTool
 {
@@ -19,6 +19,7 @@ namespace ThomasLevesque.AutoRunCustomTool
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidAutoRunCustomToolPkgString)]
     [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideOptionPage(typeof(OptionsPageGrid), "AutoRunCustomTool", "General", 0, 0, true)]
     public sealed class AutoRunCustomToolPackage : AsyncPackage
     {
         public AutoRunCustomToolPackage()
@@ -53,6 +54,8 @@ namespace ThomasLevesque.AutoRunCustomTool
 
         void DocumentEvents_DocumentSaved(Document doc)
         {
+            OptionsPageGrid page = (OptionsPageGrid)GetDialogPage(typeof(OptionsPageGrid));
+
             var docItem = doc.ProjectItem;
             if (docItem == null)
                 return;
@@ -60,6 +63,7 @@ namespace ThomasLevesque.AutoRunCustomTool
             string docFullPath = (string)GetPropertyValue(docItem, "FullPath");
 
             var projectName = docItem.ContainingProject.UniqueName;
+            var projectPath = docItem.ContainingProject.FullName;
             IVsSolution solution = (IVsSolution)GetGlobalService(typeof(SVsSolution));
             IVsHierarchy project;
             solution.GetProjectOfUniqueName(projectName, out project);
@@ -72,7 +76,11 @@ namespace ThomasLevesque.AutoRunCustomTool
 
             var targets = new List<string>();
 
+            
             string customTool = GetPropertyValue(docItem, "CustomTool") as string;
+
+            bool useGlobalOption = !string.IsNullOrEmpty(page.ListenToExtension) && !string.IsNullOrEmpty(page.ToolToRun) && string.IsNullOrEmpty(customTool);
+
             if (customTool == "AutoRunCustomTool")
             {
                 LogWarning(project, docFullPath, "Setting Custom Tool to 'AutoRunCustomTool' is still supported for compatibility, but is deprecated. Use the 'Run custom tool on' property instead");
@@ -84,7 +92,7 @@ namespace ThomasLevesque.AutoRunCustomTool
                 }
                 targets.Add(targetName);
             }
-            else
+            else if(!useGlobalOption)
             {
                 IVsBuildPropertyStorage storage = project as IVsBuildPropertyStorage;
                 if (storage == null)
@@ -102,12 +110,23 @@ namespace ThomasLevesque.AutoRunCustomTool
                     return;
                 targets.AddRange(runCustomToolOn.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
             }
+            else
+            {
+                string curExtension = "*" + Path.GetExtension(docFullPath).ToLower();
+                HashSet<string> extensions = new HashSet<string>(page.ListenToExtension.ToLower().Split(';'));
+
+                if (extensions.Contains(curExtension))
+                    targets.AddRange(page.ToolToRun.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+            }
+
+
+            string dir = useGlobalOption ? Path.GetDirectoryName(projectPath) : Path.GetDirectoryName(docFullPath);
 
             foreach (var targetName in targets)
             {
-                string dir = Path.GetDirectoryName(docFullPath);
                 // ReSharper disable once AssignNullToNotNullAttribute
                 string targetPath = Path.GetFullPath(Path.Combine(dir, targetName));
+
                 var targetItem = _dte.Solution.FindProjectItem(targetPath);
                 if (targetItem == null)
                 {
