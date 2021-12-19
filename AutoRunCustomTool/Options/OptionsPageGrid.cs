@@ -6,13 +6,13 @@ namespace ThomasLevesque.AutoRunCustomTool.Options
     public class OptionsPageGrid : DialogPage
     {
         [Category("AutoRunCustomTool")]
-        [DisplayName("Extensions")]
-        [Description("What extension(s) to run the custom tool on")]
-        public string ListenToExtension { get; set; }
+        [DisplayName("Trigger on extensions")]
+        [Description("What extension(s) trigger \"Target files\" to run custom tools")]
+        public string TriggerExtenstions { get; set; }
 
         [Category("AutoRunCustomTool")]
-        [DisplayName("File to run tool on")]
-        [Description("The file that we should trigger a custom tool on save")]
-        public string ToolToRun { get; set; }
+        [DisplayName("Target files")]
+        [Description("The files to trigger custom tools on, relative to project path")]
+        public string TargetFiles { get; set; }
     }
 }

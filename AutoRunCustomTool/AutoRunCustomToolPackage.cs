@@ -79,7 +79,7 @@ namespace ThomasLevesque.AutoRunCustomTool
             
             string customTool = GetPropertyValue(docItem, "CustomTool") as string;
 
-            bool useGlobalOption = !string.IsNullOrEmpty(page.ListenToExtension) && !string.IsNullOrEmpty(page.ToolToRun) && string.IsNullOrEmpty(customTool);
+            bool useGlobalOption = !string.IsNullOrEmpty(page.TriggerExtenstions) && !string.IsNullOrEmpty(page.TargetFiles) && string.IsNullOrEmpty(customTool);
 
             if (customTool == "AutoRunCustomTool")
             {
@@ -113,10 +113,10 @@ namespace ThomasLevesque.AutoRunCustomTool
             else
             {
                 string curExtension = "*" + Path.GetExtension(docFullPath).ToLower();
-                string[] extensions = page.ListenToExtension.ToLower().Split(';');
+                string[] extensions = page.TriggerExtenstions.ToLower().Split(';');
 
                 if (extensions.Contains(curExtension))
-                    targets.AddRange(page.ToolToRun.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+                    targets.AddRange(page.TargetFiles.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
             }
 
 
