@@ -113,7 +113,7 @@ namespace ThomasLevesque.AutoRunCustomTool
             else
             {
                 string curExtension = "*" + Path.GetExtension(docFullPath).ToLower();
-                HashSet<string> extensions = new HashSet<string>(page.ListenToExtension.ToLower().Split(';'));
+                string[] extensions = page.ListenToExtension.ToLower().Split(';');
 
                 if (extensions.Contains(curExtension))
                     targets.AddRange(page.ToolToRun.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
