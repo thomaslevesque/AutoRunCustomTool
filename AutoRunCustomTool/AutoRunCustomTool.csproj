@@ -89,6 +89,7 @@
     <Content Include="..\Shared\Resources\Package.ico">
       <Link>Package.ico</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="..\AutoRunCustomToolShared\AutoRunCustomToolShared.projitems" Label="Shared" />
