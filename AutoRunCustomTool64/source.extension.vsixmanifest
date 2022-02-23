@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="AutoRunCustomTool64.bdbd7370-6a02-43d2-8452-9e6e99d0533e" Version="1.0" Language="en-US" Publisher="Diligent Corporation" />
-    <DisplayName>AutoRunCustomTool64</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Identity Id="7ec0f89c-f00d-48ab-a76b-713d90fdbf03" Version="1.0" Language="en-US" Publisher="Thomas Levesque" />
+    <DisplayName>AutoRunCustomTool</DisplayName>
+    <Description xml:space="preserve">Automatically runs the custom tool on another file when a file is modified.</Description>
+    <MoreInfo>https://github.com/thomaslevesque/AutoRunCustomTool</MoreInfo>
+    <Icon>Resources\Package.ico</Icon>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
