@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)AutoRunCustomToolPackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Guids.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PropertyExtender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PropertyExtenderProvider.cs" />
   </ItemGroup>
