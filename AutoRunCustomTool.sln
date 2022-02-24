@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRunCustomTool", "AutoRu
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AutoRunCustomToolShared", "AutoRunCustomToolShared\AutoRunCustomToolShared.shproj", "{8E0C7164-B1EB-4C6B-8FC2-7D43AB8DDDC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRunCustomTool64", "AutoRunCustomTool64\AutoRunCustomTool64.csproj", "{7A559F3B-752A-4FF6-A29E-E299FC9A8F59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRunCustomTool2022", "AutoRunCustomTool2022\AutoRunCustomTool2022.csproj", "{7A559F3B-752A-4FF6-A29E-E299FC9A8F59}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

@@ -13,8 +13,8 @@
     <ProjectGuid>{7A559F3B-752A-4FF6-A29E-E299FC9A8F59}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoRunCustomTool64</RootNamespace>
-    <AssemblyName>AutoRunCustomTool64</AssemblyName>
+    <RootNamespace>AutoRunCustomTool2022</RootNamespace>
+    <AssemblyName>AutoRunCustomTool2022</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
