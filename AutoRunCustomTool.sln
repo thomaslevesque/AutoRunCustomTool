@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRunCustomTool", "AutoRunCustomTool\AutoRunCustomTool.csproj", "{B61D18B8-CDC7-4D5F-A82B-EE6231126ECA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRunCustomTool2015", "AutoRunCustomTool2015\AutoRunCustomTool2015.csproj", "{B61D18B8-CDC7-4D5F-A82B-EE6231126ECA}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AutoRunCustomToolShared", "AutoRunCustomToolShared\AutoRunCustomToolShared.shproj", "{8E0C7164-B1EB-4C6B-8FC2-7D43AB8DDDC2}"
 EndProject
