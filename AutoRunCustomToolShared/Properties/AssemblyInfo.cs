@@ -19,8 +19,8 @@ using System.Runtime.InteropServices;
 [assembly: CLSCompliant(false)]
 [assembly: NeutralResourcesLanguage("en-US")]
 
-[assembly: AssemblyVersion("3.0.1.0")]
-[assembly: AssemblyFileVersion("3.0.1.0")]
+[assembly: AssemblyVersion("3.1.0.0")]
+[assembly: AssemblyFileVersion("3.1.0.0")]
 
 [assembly: InternalsVisibleTo("AutoRunCustomTool_IntegrationTests, PublicKey=00240000048000009400000006020000002400005253413100040000010001002d5afe9769cb55b94316099caf879e318f22c86b1d448f9ec8dbb7c67d52368bdde6ff6fb4e13372b9f839915260910ab3db617e2ebedf5f0816b2e2629c9003f31efb2ca730aa6b87fb3986ba4881dc6c9f957ad52186a82f5d5073f30086d1ee2a615572963e7ccda405b0cb4319cefb676f490f0d7e326173465c8ff7898a")]
 [assembly: InternalsVisibleTo("AutoRunCustomTool_UnitTests, PublicKey=00240000048000009400000006020000002400005253413100040000010001002d5afe9769cb55b94316099caf879e318f22c86b1d448f9ec8dbb7c67d52368bdde6ff6fb4e13372b9f839915260910ab3db617e2ebedf5f0816b2e2629c9003f31efb2ca730aa6b87fb3986ba4881dc6c9f957ad52186a82f5d5073f30086d1ee2a615572963e7ccda405b0cb4319cefb676f490f0d7e326173465c8ff7898a")]

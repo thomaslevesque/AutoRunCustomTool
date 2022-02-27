@@ -24,4 +24,7 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Resources\Package.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Key.snk" />
+  </ItemGroup>
 </Project>
