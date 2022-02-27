@@ -3,7 +3,7 @@ AutoRunCustomTool
 
 *[Download from Visual Studio Gallery](http://visualstudiogallery.msdn.microsoft.com/ecb123bf-44bb-4ae3-91ee-a08fc1b9770e)*
 
-⚠ **Known issue**: This extension doesn't work in SDK-style (.NET Core) projects. See [#18](https://github.com/thomaslevesque/AutoRunCustomTool/issues/18) for details. ⚠
+⚠ **Known issue**: This extension doesn't fully work with SDK-style (.NET Core / .NET 5+) projects. It's usable, but without UI support; you'll need to manually set the `RunCustomToolOn` property in the project file. See [#18](https://github.com/thomaslevesque/AutoRunCustomTool/issues/18#issuecomment-1053609437) for details. ⚠
 
 A Visual Studio extension that automatically runs the custom tool on another file when a file is modified
 
