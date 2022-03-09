@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="target.tt" />
+    <None Remove="target.txt" />
+    <None Remove="target2.tt" />
+    <None Remove="target2.txt" />
+    <None Remove="trigger.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="target.tt">
+      <LastGenOutput>target.txt</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="target.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>target.tt</DependentUpon>
+    </Content>
+    <Content Include="target2.tt">
+      <LastGenOutput>target2.txt</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="target2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>target2.tt</DependentUpon>
+    </Content>
+    <Content Include="trigger.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  <RunCustomToolOn>target.tt;target2.tt</RunCustomToolOn>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>

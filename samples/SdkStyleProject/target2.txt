@@ -1,0 +1,2 @@
+﻿This file was last generated 03/09/2022 10:11:53 by template 'target2.tt'
+The content of the trigger file is: hello world!!!

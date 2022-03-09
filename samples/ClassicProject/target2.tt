@@ -1,0 +1,9 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".txt" #>
+<#
+	string dir = System.IO.Path.GetDirectoryName(Host.TemplateFile);
+	string triggerPath = System.IO.Path.Combine(dir, "trigger.txt");
+	string content = System.IO.File.ReadAllText(triggerPath);
+#>
+This file was last generated <#= DateTime.Now #> by template 'target2.tt'
+The content of the trigger file is: <#= content #>
