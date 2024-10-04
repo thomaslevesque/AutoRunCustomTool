@@ -3,10 +3,13 @@ AutoRunCustomTool
 
 > [!WARNING]  
 > This project is no longer maintained. The VS extension remains available as-is on the Visual Studio marketplace, but no new version will be published.
+> 
 > Some of the reasons for abandoning this project are:
+> - It doesn't fully work with SDK-style projects (i.e. non-legacy projects), which means it's becoming irrelevant
 > - I no longer use this extension myself
 > - I switched to Rider a few years ago, and I rarely, if ever, use Visual Studio
 > - The main use case for this extension, T4 templates, is becoming obsolete. .NET now offers better, built-in approaches for code generation.
+> 
 > Feel free to fork the project if you need to make some changes.
 
 *Download from Visual Studio Marketplace: [VS 2015/2017/2019](https://marketplace.visualstudio.com/items?itemName=ThomasLevesque.AutoRunCustomTool), [VS 2022](https://marketplace.visualstudio.com/items?itemName=ThomasLevesque.AutoRunCustomTool2022)*
